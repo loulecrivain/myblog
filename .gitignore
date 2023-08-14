@@ -17,6 +17,8 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *.swp
+*~
 
 # phpstorm
 .idea/*
+
