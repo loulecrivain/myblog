@@ -7,6 +7,16 @@ pages:
     markdown: true
     twig: false
 
+languages:
+  supported:
+    - fr
+    - en
+  default_lang: fr
+    include_default_lang: true
+  content_fallback:
+    en: ['fr', 'en']
+    fr: ['fr']
+
 cache:
   enabled: true
   check:
