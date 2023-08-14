@@ -1,6 +1,7 @@
 ---
 title: Machine virtuelle Windows 10 avec QEMU/kvm
 date: 10:25 27/10/2018
+hero_image: nouvel_ecran_de_chargement.jpg
 taxonomy:
     category: blog
     tag: [virtualization,windows]
