@@ -14,6 +14,8 @@ taxonomy:
 
 Guide pas-à-pas pour la création d'une machine virtuelle Windows 10 avec Qemu. Cet article est reposté à partir d'un ancien blog, les captures datent donc un peu (Windows 1703 était la dernière version au moment de la rédaction).
 
+! _nota bene_: cet article est **vieux**
+
 ===
 
 # Intro
