@@ -1,10 +1,15 @@
 ---
-title: Machine virtuelle Windows 10 avec QEMU/kvm
+title: Machine virtuelle Windows 10 avec QEMU
 date: 10:25 10/27/2018
+author: kouett
+
+hero_classes: text-light title-h1h2 parallax overlay-dark-gradient hero-large
 hero_image: nouvel_ecran_de_chargement.jpg
+show_sidebar: true
+
 taxonomy:
     category: blog
-    tag: [virtualization,windows]
+    tag: [windows, virtualisation]
 ---
 
 Guide pas-à-pas pour la création d'une machine virtuelle Windows 10 avec Qemu. Cet article est reposté à partir d'un ancien blog, les captures datent donc un peu (Windows 1703 était la dernière version au moment de la rédaction).
@@ -24,10 +29,10 @@ Mais il est possible qu'aucune de celles-ci ne soient applicables. C'est pourquo
  - la carte graphique est émulée
 L'avantage principal de la virtualisation est que l'on a pas à changer de machine ou à redémarrer. De plus, QEMU peut d'émuler un partage réseau Windows, ce qui permet d'échanger des fichiers avec la VM.
 
-Le système hôte (celui qui fait tourner QEMU) est une Debian Stretch sur un PC amd64. Je n'ai pas testé cela sur *BSD. Sur Mac OS X, il y a de fortes restrictions concernant l'utilisation de [l'accélération matérielle avec qemu](https://wiki.qemu.org/Hosts/Mac).
+! Le système hôte (celui qui fait tourner QEMU) est une Debian Stretch sur un PC amd64. Je n'ai pas testé cela sur *BSD. Sur Mac OS X, il y a de fortes restrictions concernant l'utilisation de [l'accélération matérielle avec qemu](https://wiki.qemu.org/Hosts/Mac).
 
 # Préparation
-Il vous faudra bien sûr une image au format iso du disque d'installation de Windows, ainsi qu'une clé de license valide. Vous devez aussi avoir installé qemu et samba (si vous prévoyez d'utiliser la fonctionnalité d'émulation des lecteurs réseau). Les noms des paquets à installer sous Debian sont =qemu-kvm=, =qemu-system-common=, =qemu-system-x86=, =qemu-utils= et =samba= (ainsi que ses dépendances). Désactivez le lancement automatique de samba après son installation si vous ne souhaitez pas l'utiliser autrement que pour qemu (services nmbd et smbd).
+Il vous faudra bien sûr une image au format iso du disque d'installation de Windows, ainsi qu'une clé de license valide. Vous devez aussi avoir installé qemu et samba (si vous prévoyez d'utiliser la fonctionnalité d'émulation des lecteurs réseau). Les noms des paquets à installer sous Debian sont ```qemu-kvm```, ```qemu-system-common```, ```qemu-system-x86```, ```qemu-utils``` et ```samba``` (ainsi que ses dépendances). Désactivez le lancement automatique de samba après son installation si vous ne souhaitez pas l'utiliser autrement que pour qemu (services nmbd et smbd).
 ## CD de drivers (*facultatif*)
 Par défaut, Windows n'est pas capable d'utiliser certains lecteurs virtuels fournis par QEMU. Utiliser des disques non-IDE requiert donc un CD de drivers qui permettront l'utilisation du disque dur virtuel durant l'installation et pendant le fonctionnement normal du système hôte. Vous pouvez le télécharger sur [la page "Creating Windows virtual machines using virtIO drivers" du projet Fedora]([https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/index.html]). Je vous conseille d'utiliser la [version stable au format iso](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso) du CD de drivers.
 
@@ -92,7 +97,10 @@ L'installation se termine ensuite automatiquement.
 Après la fin de l'installation automatique, Windows redémarre depuis l'installation faite sur le disque dur. Le système termine son paramétrage (ça peut être plutôt long, et il va vous afficher plusieurs écrans). Une fois l'installation complètement terminée, je vous suggère d'effectuer les réglages suivants afin d'avoir une VM plus utilisable:
 
 
-Pour améliorer les performances, vous pouvez passer en mode graphique simplifié. Pour cela, allez dans _"Panneau de configuration>Système>Paramètres système avancés>Performances>Paramètres"_. Ci-dessous, un exemple de définition de paramètres personnalisés (je laisse le lissage des polices, sinon ça fait vraiment trop mal aux yeux):
+!!! Pour améliorer les performances, vous pouvez passer en mode graphique simplifié. Pour cela, allez dans _"Panneau de configuration>Système>Paramètres système avancés>Performances>Paramètres"_.
+
+
+Ci-dessous, un exemple de définition de paramètres personnalisés (je laisse le lissage des polices, sinon ça fait vraiment trop mal aux yeux):
 
 ![Modification des paramètres d'effets graphiques de Windows](grafx_accel.jpg)
   
