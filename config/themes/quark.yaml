@@ -1,1 +1,3 @@
 grid-size: grid-xl
+custom_logo:
+    - name: 'blogheader.png'

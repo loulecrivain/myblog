@@ -5,7 +5,6 @@ sitemap:
 body_classes: 'header-dark header-transparent'
 hero_classes: 'text-light title-h1h2 overlay-dark-gradient hero-large parallax'
 hero_image: road.jpg
-custom: 'new thing'
 blog_url: /blog
 show_sidebar: true
 show_breadcrumbs: true
@@ -19,10 +18,10 @@ content:
     pagination: true
     url_taxonomy_filters: true
 feed:
-    description: 'Sample Blog Description'
+    description: 'kouett tech and thoughts blog'
     limit: 10
 pagination: true
 ---
 
-# My **Grav**tastic Blog
-## the ramblings of a rambler
+# kouett blog
+## tech posts and random thoughts

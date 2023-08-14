@@ -2,10 +2,6 @@
 routable: false
 ---
 
-#### Some Text Widget
-
-You can **edit** this by modifying the `modules/sidebar/default.md` page. 
-
-To **reorder** things in the sidebar you need to modify the `partials/sidebar.html.twig` template file.
-
-
+#### Socials
+- ![Mastodon icon](image://mastodon.png) [Fediverse](https://soc.kouett.net.eu.org/kouett)
+- ![Tumblr icon](image://tumblr.png) [Tumblr](https://www.tumblr.com/poggersterone)
