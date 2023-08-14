@@ -12,7 +12,7 @@ languages:
     - fr
     - en
   default_lang: fr
-    include_default_lang: true
+  include_default_lang: true
   content_fallback:
     en: ['fr', 'en']
     fr: ['fr']
