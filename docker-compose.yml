@@ -1,0 +1,17 @@
+version: "3"
+
+volumes:
+  grav-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/.docker-grav-data
+      o: bind
+
+services:
+  grav:
+    build: ./
+    ports:
+      - 8080:80
+    volumes:
+      - grav-data:/var/www/html

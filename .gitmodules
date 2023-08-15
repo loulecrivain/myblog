@@ -1,0 +1,3 @@
+[submodule ".docker-grav"]
+	path = .docker-grav
+	url = https://github.com/getgrav/docker-grav.git

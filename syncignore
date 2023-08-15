@@ -1,5 +1,8 @@
 Makefile
 syncignore
+Dockerfile
 
+.docker-grav/
+.docker-grav-data/
 .git/
 *~

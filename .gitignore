@@ -20,3 +20,4 @@ Thumbs.db
 # phpstorm
 .idea/*
 
+.docker-grav-data/
