@@ -18,7 +18,8 @@ content:
     pagination: true
     url_taxonomy_filters: true
 feed:
-    description: 'kouett tech and thoughts blog'
+    title: 'kouett blog'
+    description: 'kouett blog - tech posts and random thoughts'
     limit: 10
 pagination: true
 ---
