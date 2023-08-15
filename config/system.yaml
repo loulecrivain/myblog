@@ -15,7 +15,7 @@ languages:
   include_default_lang: true
   content_fallback:
     en: ['fr', 'en']
-    fr: ['fr']
+    fr: ['fr', 'en']
 
 cache:
   enabled: true
