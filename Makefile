@@ -2,13 +2,22 @@ EXCLUDE_FILE='syncignore'
 SSH_CMD?="ssh"
 MORE_PARMS?=''
 RSYNC_OPTS=--exclude-from=$(EXCLUDE_FILE) -e $(SSH_CMD) -zvr
-DST=grav@ynh.kouett.net.eu.org:~/user/
+DST_SSH=grav@ynh.kouett.net.eu.org
+DST=$(DST_SSH):~/user/
 SRC=.
 STAGING_SRC=$(SRC)
 STAGING_DST=.docker-grav-data/user
 
-sync: rights
+# refresh grav plugins
+gravplugins:
+	$(SSH_CMD) $(DST_SSH) bin/grav install
+
+rsync:
 	rsync $(RSYNC_OPTS) $(SRC) $(DST)
+
+# dependency order is important !
+sync: clean rights rsync gravplugins
+	echo "sync done !"
 
 all: sync
 
