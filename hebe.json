@@ -35,6 +35,9 @@
             }],
             "antimatter theme":[{
                "project":"grav-theme-antimatter"
+            }],
+            "prism-highlight plugin":[{
+               "project": "grav-plugin-prism-highlight"
             }]
          }
       }
