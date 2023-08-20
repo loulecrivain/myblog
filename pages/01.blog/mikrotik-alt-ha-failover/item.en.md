@@ -120,6 +120,7 @@ Connectivity through ISP1 is now up and running. We have to do the same again fo
 !! Don't forget to add the administrative ```distance``` bit for active/backup config ! otherwise you can also add none if you dont care which access is used, you'll be doing [ecmp](https://en.wikipedia.org/wiki/Equal-cost_multi-path_routing) aka _load balancing_ in this case
 
 Your routing table should look like this:
+
 ![routing table entries](routing-table.png)
 
 ## monitoring and disabling routes
