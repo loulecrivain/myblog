@@ -11,7 +11,7 @@ taxonomy:
     tag: [gns3, routing, huawei]
 ---
 
-Here we delve into the story of misnumbered interfaces on a GNS3 template, or how LLDP became my friend.
+Here we delve into the story of misnumbered interfaces on a GNS3 template, or how LLDP saved my ass.
 
 ===
 
@@ -55,39 +55,60 @@ From there I was a bit puzzled. Did I made a mistake in my configuration ? After
 
 # The culprit
 
-First, after looking at the corresponding NE40E template for EVE-NG, I suspected some drivers issues, since this one uses ```vmxnet3``` NICs instead of ```e1000```.
+First, after looking at the corresponding NE40E template for EVE-NG, I suspected some drivers issues, since this one uses ```vmxnet3``` NICs instead of ```e1000```. So, I tinkered with the official template to move all VM NICs to ```vmxnet3```. But no luck, same problem !
 
-So, I tinkered with the official template to move all VM NICs to ```vmxnet3```. But no luck, same problem !
-
-After some more tests, I found that only ```eth0``` (```GigabitEthernet 0/0/0``` on the NE40E) were working, when put face-to-face.
-
-Since the rest of the interfaces were named FastEthernet, I thought it may be some classical full-duplex / half-duplex configuration issue.
-
-However, the collision/error counters weren't matching this hypothesis. If it was the case, I should have *some* packet loss, not packet loss
-*all the goddamn time*.
+After some more tests, I found that only ```eth0``` (```GigabitEthernet 0/0/0``` on the NE40E) were working, when put face-to-face (ie both routers linked through this interface). Since the rest of the interfaces were named FastEthernet, I thought it may be some "classical" full-duplex / half-duplex configuration issue. However, the collision/error counters weren't matching this hypothesis. If it was the case, I should have *some* packet loss, not packet loss *all the goddamn time*.
 
 ## LLDP to the rescue
 
-It was time to resort to Wireshark. 
+It was time to resort to Wireshark (to be honest, I should have done this earlier). The packet capture showed no ARP queries or answer from any of the routers, as if the packets were never sent on the link.
 
-how did you found the error
-eth0 test
-lldp debugging -> what commands did you use ?
-how you found numbering was shit
+![Wireshark packet capture showing only lldp advertisements](pcap.png)
 
-## a small irc discussion
-don't forget to credit ! -> ask on irc
+ However, and as you can see, there was plenty of LLDP advertisements. This gave me the idea to try and see what LLDP had to say about all this. And oh boy, it did answer my questions.
 
-1. change on GNS3 ui
-2. where you found gns3 redefined interfaces template (.local)
-3. hurra :) what's left: rewriting to new template
+![result of the command dis lldp neighbors entered on one of the NE routers](lldp.png)
 
+Maybe it isn't very clear because of the lack of context, but at that moment, the other router was linked through ```Ethernet 1/0/3```, *not* ```Ethernet 1/0/2```. From there, it became clear that the [current template](https://github.com/GNS3/gns3-registry/blob/579ff539991090c38b92a967ac8fa2b9e87e5f87/appliances/huawei-ne40e.gns3a) had off-by-one interface numbering issues.
 
+Hurra ! Problem found :) Now onto the fixing part.
 
-## fixing it
+## a small irc discussion and fixes
+Because GNS3 doesn't allow to "skip" interfaces in the template definition (as EVE-NG does), I had no clue as to how I should proceed for redefining the template. So I asked on #gns3 at libera. Luckily, someone encountered the exact same problem as me and managed to find their way in the GUI. But only by modifying interface naming *after* template import. Since they shared their screenshots with me, I was able to redo the exact same thing on my side. From there, I only had to copy the ```custom_adapters``` parts of the local device definition into my template modification.
 
-the new template
-link github pull request
+So, the new template reads something like this:
+```json
+{
+    "appliance_id": "03aa586b-5666-49e9-a70c-e5935fdbc23d",
+    "name": "HuaWei NE40E",
+    "category": "router",
+    "qemu": {
+        "adapter_type": "e1000",
+        "adapters": 12,
+        "custom_adapters": [
+                {
+                    "adapter_number": 0,
+                    "port_name": "Gi0/0/0"
+                },
+                {
+                    "adapter_number": 1,
+                    "port_name": "Mgmt0/0"
+                },
+                {
+                    "adapter_number": 2,
+                    "port_name": "Ethernet1/0/0"
+                },
+				{
+                     "adapter_number": 11,
+                    "port_name": "Ethernet1/0/9"
+                }
+        ],
+	}
+}
+```
+
+Soon after I opened [a pull request in GNS3 registry](https://github.com/GNS3/gns3-registry/pull/840) for the fix, it was merged. Thank you Jeremy ;)
+
 
 # bonus track
 link the original NE40E image on www files
