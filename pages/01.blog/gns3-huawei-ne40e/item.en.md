@@ -19,11 +19,11 @@ Here we delve into the story of misnumbered interfaces on a GNS3 template, or ho
 
 For reasons™, I had to set up a lab comprising of virtual Huawei routers. I had no particular restrictions as for which model exactly, from the moment it ran a fairly recent version of VRP software (Huawei's Versatile Router Platform).
 
-Since Huawei's eNSP simulation platform [is now discontinued](https://forum.huawei.com/enterprise/en/ensp/thread/667283910159122432-667213872060313600), the next best choice was to use GNS3.
+Since Huawei's eNSP simulation platform [is now discontinued](https://web.archive.org/web/20220414075127/https://forum.huawei.com/enterprise/en/ensp/thread/622830-100289), the next best choice was to use GNS3.
 
 Browsing the [GNS3 appliances repository](https://gns3.com/marketplace/appliances) revealed that indeed, there was an existing template for a virtual Huawei NE40E.
 
-After a little bit of digging, the correct image for the template was found [on the vendor forum](https://forum.huawei.com/enterprise/en/ne40e-image-for-the-eve-ng/thread/667246427329413121-667213852955258880).
+After a little bit of digging, the correct image for the template was found [on the vendor forum](https://web.archive.org/web/20220413025714/https://forum.huawei.com/enterprise/en/ne40e-image-for-the-eve-ng/thread/756237-861).
 
 ## Lab structure
 
@@ -82,6 +82,7 @@ So, the new template reads something like this:
     "appliance_id": "03aa586b-5666-49e9-a70c-e5935fdbc23d",
     "name": "HuaWei NE40E",
     "category": "router",
+	...
     "qemu": {
         "adapter_type": "e1000",
         "adapters": 12,
@@ -98,6 +99,7 @@ So, the new template reads something like this:
                     "adapter_number": 2,
                     "port_name": "Ethernet1/0/0"
                 },
+				...
 				{
                      "adapter_number": 11,
                     "port_name": "Ethernet1/0/9"
@@ -108,8 +110,3 @@ So, the new template reads something like this:
 ```
 
 Soon after I opened [a pull request in GNS3 registry](https://github.com/GNS3/gns3-registry/pull/840) for the fix, it was merged. Thank you Jeremy ;)
-
-
-# bonus track
-link the original NE40E image on www files
-for better availability
