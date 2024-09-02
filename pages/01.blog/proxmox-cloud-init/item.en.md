@@ -21,6 +21,7 @@ On this specific stack:
 - Proxmox VE
 - Debian 12 "Generic Cloud" image
 - Cloud-Init enabled on PVE
+
 It is apparently not possible to configure a fixed IPv4 with Cloud-Init. The VM will boot but will use cloud-init defaults, which is dynamic IPv4.
 
 
